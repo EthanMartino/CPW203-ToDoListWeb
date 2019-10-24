@@ -7,13 +7,14 @@
     <meta name="Description" content="Free online ToDo List Tracker. Manage your todos for free online.">
     <title>Free Online ToDo List</title>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 </head>
 <body>
     <h1>ToDo List</h1>
 
     <form>
         <input type="text" name="title" id="title" placeholder="Title"> <br>
-        <input type="text" name="deadline" id="deadline" placeholder="Deadline" aria-placeholder="Enter a date for when the task is due."> <br>
+        <input type="text" name="deadline" id="deadline" placeholder="Deadline" aria-placeholder="Enter a date for when the task is due." autocomplete="off"> <br>
         <input type="checkbox" name="is-complete" id="is-complete">Is Complete? <br><br>
         <input type="button" value="Add ToDo">
     </form>
@@ -23,5 +24,9 @@
     <div id="completed"></div>
 
     <script src="scripts/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script>
+        var picker = new Pikaday({ field: document.getElementById('deadline') });
+    </script>
 </body>
 </html>
