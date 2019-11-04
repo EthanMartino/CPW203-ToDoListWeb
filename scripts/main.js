@@ -7,7 +7,16 @@ var ToDoItem = /** @class */ (function () {
     }
     return ToDoItem;
 }());
-var myItem = new ToDoItem("Finish Class");
+//Test Code:
+var myItem = new ToDoItem("Learn About Cookies=;");
+myItem.isCompleted = false;
+myItem.deadline = new Date(2019, 9, 29); //October 29, 2019 (Month = 0-11)
+//stringify converts object into JSON style string
+var strData = JSON.stringify(myItem);
+console.log(strData);
+//Setting a cookie called "todoitems" that expires in 7 days
+Cookies.set("todoitems", strData, { expires: 7 });
+Cookies.set("todoitems", strData, { expires: 7 });
 window.onload = function () {
     var addBtn = document.querySelector("form > input[type=button]");
     addBtn.onclick = main;
