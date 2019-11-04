@@ -1,5 +1,5 @@
-## Ignore notes file
+# Ignore notes file
 notes.txt
 
-## Ignore node modules
+# Ignore node modules folder
 node_modules
