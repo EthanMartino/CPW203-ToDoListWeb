@@ -12,6 +12,7 @@ class ToDoItem{
 }
 
 //Test Code:
+
 let myItem = new ToDoItem("Learn About Cookies=;"); 
 myItem.isCompleted = false;
 myItem.deadline = new Date(2019, 9, 29);  //October 29, 2019 (Month = 0-11)
@@ -20,9 +21,30 @@ myItem.deadline = new Date(2019, 9, 29);  //October 29, 2019 (Month = 0-11)
 let strData:string = JSON.stringify(myItem);
 console.log(strData);
 
+        //COOKIE TESTS\\
+const cookieKey:string = "todoitems";
 //Setting a cookie called "todoitems" that expires in 7 days
-Cookies.set("todoitems", strData, {expires : 7})
-Cookies.set("todoitems", strData, {expires : 7})
+Cookies.set(cookieKey, strData, {expires : 7})
+
+//Reading ToDoItem from Cookie
+let cookieItem:ToDoItem = JSON.parse(Cookies.get(cookieKey));
+console.log("Read Cookie data");
+console.log(cookieItem.title + " " + cookieItem.deadline);
+
+
+        //STORE TODO ITEM USING HTML WEB STORAGE
+const storageKey:string = "Task";
+if(typeof(Storage) != undefined){
+    localStorage.setItem(storageKey, strData);
+    let storageStr:string = localStorage.getItem(storageKey);
+    let storageItem:ToDoItem = JSON.parse(storageStr);
+    console.log("Reading Sotrage Data");
+    console.log(storageItem.title);
+}
+
+
+//END TEST CODE\\
+
 
 
 
@@ -37,6 +59,13 @@ function main():void{
     displayToDoItem(item);
 
     //Save todo
+    let allItems = readToDoItems();
+    allItems.push(item);
+    saveToDoItems(allItems);
+
+    for(let i = 0; i < allItems.length; i++){
+        alert(allItems[i].title);
+    }
 }
 
 /**
@@ -81,4 +110,22 @@ function markAsComplete():void{
     let currItem = <HTMLDivElement>this;
     let completedItems = document.getElementById("completed");
     completedItems.appendChild(currItem);
+}
+
+const theStorageKey = "MyItems";
+
+function saveToDoItems(items:Array<ToDoItem>):void{
+    let stringData = JSON.stringify(items);
+    localStorage.setItem(theStorageKey, stringData);
+}
+
+function readToDoItems():Array<ToDoItem>{
+    let stringData = localStorage.getItem(theStorageKey);
+
+    if(stringData == null){
+        return new Array<ToDoItem>();
+    }
+
+    let itemArray:Array<ToDoItem> = JSON.parse(stringData);
+    return itemArray;
 }

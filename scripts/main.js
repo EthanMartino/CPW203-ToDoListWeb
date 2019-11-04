@@ -14,9 +14,24 @@ myItem.deadline = new Date(2019, 9, 29); //October 29, 2019 (Month = 0-11)
 //stringify converts object into JSON style string
 var strData = JSON.stringify(myItem);
 console.log(strData);
+//COOKIE TESTS\\
+var cookieKey = "todoitems";
 //Setting a cookie called "todoitems" that expires in 7 days
-Cookies.set("todoitems", strData, { expires: 7 });
-Cookies.set("todoitems", strData, { expires: 7 });
+Cookies.set(cookieKey, strData, { expires: 7 });
+//Reading ToDoItem from Cookie
+var cookieItem = JSON.parse(Cookies.get(cookieKey));
+console.log("Read Cookie data");
+console.log(cookieItem.title + " " + cookieItem.deadline);
+//STORE TODO ITEM USING HTML WEB STORAGE
+var storageKey = "Task";
+if (typeof (Storage) != undefined) {
+    localStorage.setItem(storageKey, strData);
+    var storageStr = localStorage.getItem(storageKey);
+    var storageItem = JSON.parse(storageStr);
+    console.log("Reading Sotrage Data");
+    console.log(storageItem.title);
+}
+//END TEST CODE\\
 window.onload = function () {
     var addBtn = document.querySelector("form > input[type=button]");
     addBtn.onclick = main;
@@ -25,6 +40,12 @@ function main() {
     var item = getItem();
     displayToDoItem(item);
     //Save todo
+    var allItems = readToDoItems();
+    allItems.push(item);
+    saveToDoItems(allItems);
+    for (var i = 0; i < allItems.length; i++) {
+        alert(allItems[i].title);
+    }
 }
 /**
  * Creates and returns ToDoItem object based on user input in the form
@@ -60,4 +81,17 @@ function markAsComplete() {
     var currItem = this;
     var completedItems = document.getElementById("completed");
     completedItems.appendChild(currItem);
+}
+var theStorageKey = "MyItems";
+function saveToDoItems(items) {
+    var stringData = JSON.stringify(items);
+    localStorage.setItem(theStorageKey, stringData);
+}
+function readToDoItems() {
+    var stringData = localStorage.getItem(theStorageKey);
+    if (stringData == null) {
+        return new Array();
+    }
+    var itemArray = JSON.parse(stringData);
+    return itemArray;
 }
