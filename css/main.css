@@ -40,3 +40,22 @@ div#completed{
         margin-top: 1em;
     }
 }
+
+h1{
+    color: lightblue;
+    font-size: 2em;
+}
+
+h1, form{
+    text-align: center;
+}
+
+body{
+    background-image: linear-gradient(-90deg, blue, purple);
+}
+
+input#title, input#deadline{
+    width: 20em;
+    height: 2em;
+    margin: .3em;
+}
